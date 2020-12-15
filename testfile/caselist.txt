@@ -1,0 +1,9 @@
+#配置将要执行testCase目录下的哪些用例文件，前加警号的代表不执行。当项目过于庞大，用例足够多的时候，我们可以通过这个开关，来确定本次执行哪些接口的哪些用例
+ReturnOrder/test01ReturnOrder
+#Order/test02case
+#user/test03case
+#user/test04case
+#user/test05case
+#shop/test_shop_list
+#shop/test_my_shop
+#shop/test_new_shop
