@@ -1,26 +1,32 @@
 import requests
+import json
 
-# post(url, data=None, json=None, **kwargs):
 
-
-data = {"email": "152@qq.com", "pwd": "Yun@2019", "kaptcha": "", "redirectUrl": "http://v2.guanyierp.com/login",
+data = {"email":"152@qq.com", "pwd":"Yun@2019",  "redirectUrl": "http://v2.guanyierp.com/login",
         "webType": "main", "authCode": ""}
 
-
 def renLogin():
-
-    r = requests.post(url='http://login.guanyierp.com/login/loginDispatch',data=data)
-    # return r.cookies
-    print(r.status_code)
+    s=requests.session()
+    r = s.post(url='http://login.guanyierp.com/login/loginDispatch',json=data)
+    return r.cookie
+#     print(r.json())
+#     print(r.cookies)
+# #
+renLogin()
 
 
 # def info():
 #     '''查看信息'''
-#     data = {'month': '7', 'requestToken': '-505719466', '_rtk': 'ad9c53b0'}
-#     r = requests.post('http://sc.renren.com/scores/loadBornInfo',
+#     # home_url = 'http://v2.guanyierp.com/index'
+#     # requests.get(url=home_url, cookies=renLogin())
+#     url = 'http://v2.guanyierp.com/tc/trade/trade_order_header/data/list?_dc=1608378080780'
+#     data = 'dateType=0&beginTime=&endTime=&shopIds=&vipName=&separatorVip=&code=&separatorCode=&platformCode=20201213005&separatorPlatform=&mailNo=&separatorMailno=&hasInvoice=&refund=&approve=&financeReject=&assign=&delivery=&cancel=false&hold=&customQueryParamInfos=%5B%5D&sort=&page=1&start=0&limit=10'
+#     hearders={'Content-Type': 'application/json; charset=UTF-8'}
+#     requests.post(url=url, data=data, hearders=hearders,cookies=renLogin())
+#     data = 'dateType=0&beginTime=&endTime=&shopIds=&vipName=&separatorVip=&code=&separatorCode=&platformCode=20201213005&separatorPlatform=&mailNo=&separatorMailno=&hasInvoice=&refund=&approve=&financeReject=&assign=&delivery=&cancel=false&hold=&customQueryParamInfos=%5B%5D&sort=&page=1&start=0&limit=10'
+#     r = requests.post('http://v2.guanyierp.com/tc/trade/trade_order_header/data/list?_dc=',
 #                       data=data,
 #                       cookies=renLogin())
 #     print(r.text)
-#
 #
 # info()
