@@ -142,6 +142,7 @@ class trade_order:
         }
 
         result = self.session.post(url='http://v2.guanyierp.com/tc/trade/trade_order_header/create', json=data)
+
         print(result.json())
 
     def trade_order_list(self):
@@ -152,17 +153,27 @@ class trade_order:
                                    data=data, headers=headers)
         res = result.json()
         r = json.dumps(res, ensure_ascii=False, sort_keys=True, indent=2)
-        print(r)
+        id=res["rows"][0]["tradeOrderStatusInfo"]["id"]
+        # print(r)
+        return id
+
 
     def trade_order_detail(self):
-        data = f'dateType=0&beginTime=&endTime=&shopIds=&vipName=&separatorVip=&code=&separatorCode=&platformCode={self.platformCode}&separatorPlatform=&mailNo=&separatorMailno=&hasInvoice=&refund=&approve=&financeReject=&assign=&delivery=&cancel=false&hold=&customQueryParamInfos=%5B%5D&sort=&page=1&start=0&limit=10'
+        data=f"itemInfoAllQuery=&pid={self.trade_order_list()}&dateType=0&page=1&start=0&rows=100"
         headers = {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
                    }
-        result = self.session.post(url='http://v2.guanyierp.com/tc/trade/trade_order_header/data/list?_dc=',
+        result = self.session.post(url='http://v2.guanyierp.com/tc/trade/trade_order_header/data/detail_page?_dc=',
                                    data=data, headers=headers)
         res = result.json()
         r = json.dumps(res, ensure_ascii=False, sort_keys=True, indent=2)
-        print(r)
+        print(res["rows"][0]["giftSource"])
+        print(res["rows"][0]["giftSourceView"])
+
+    def operation_log(self):
+        url=f"http://v2.guanyierp.com/tc/trade/trade_order_header/data/log?_dc=1609168697974&tid={self.trade_order_list()}"
+        result=self.session.get(url)
+        res=result.json()
+        print(res)
 
 
     def approve(self):
@@ -180,4 +191,6 @@ if __name__ == '__main__':
 
     trade_order1 = trade_order(data)
     # print(trade_order1.get_index()["token"])
-    # trade_order1.add_tradeorder()
+    trade_order1.add_tradeorder()
+    # trade_order1.trade_order_detail()
+    trade_order1.operation_log()
