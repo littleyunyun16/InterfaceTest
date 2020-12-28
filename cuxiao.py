@@ -21,32 +21,28 @@ class trade_order:
         sample = ''.join(random.sample(string.ascii_letters + string.digits, 8))
         return sample
 
-    def add_tradeorder(self):
-        '''
-        1、发起get请求并
-        发起get请求
-        2、从get请求中拿到no_repeat_sumit_trade、token、uniqueTid的值
-        3、将上面三个参数放到请求中
-        :return:
-        '''
-
-        result = self.session.get(url='http://v2.guanyierp.com/tc/trade/trade_order_header/add')
-        res = result.content.decode('utf-8')
-        token = re.findall('<input type="hidden" id="hidToken" name="token" value="(.+?)"/>', res)[0]
-        uniqueTid = re.findall('<input type="hidden" name="uniqueTid" value="(.+?)"/>', res)[0]
+    def get_index(self,url='http://v2.guanyierp.com/tc/trade/trade_order_header/add'):
+        index_info={"token":"","uniqueTid":"","no_repeat_sumit_tradeOrderHeaderAddOrUpdate":""}
+        re_html = self.session.get(url=url)
+        re_str = re_html.content.decode('utf-8')
+        token = re.findall('<input type="hidden" id="hidToken" name="token" value="(.+?)"/>', re_str)[0]
+        uniqueTid = re.findall('<input type="hidden" name="uniqueTid" value="(.+?)"/>', re_str)[0]
         no_repeat_sumit_tradeOrderHeaderAddOrUpdate = \
-            re.findall('<input type="hidden" name="no_repeat_sumit_tradeOrderHeaderAddOrUpdate" value="(.+?)"/>', res)[
+            re.findall('<input type="hidden" name="no_repeat_sumit_tradeOrderHeaderAddOrUpdate" value="(.+?)"/>', re_str)[
                 0]
-        # print(token)
-        # print(uniqueTid)
-        # print(no_repeat_sumit_tradeOrderHeaderAddOrUpdate)
+        index_info["token"]=token
+        index_info["uniqueTid"]=uniqueTid
+        index_info["no_repeat_sumit_tradeOrderHeaderAddOrUpdate"]=no_repeat_sumit_tradeOrderHeaderAddOrUpdate
+        return index_info
 
+
+    def add_tradeorder(self):
         data = {
             "id": "",
-            "uniqueTid": uniqueTid,
-            "token": token,
+            "uniqueTid": self.get_index()["uniqueTid"],
+            "token": self.get_index()["token"],
             "currentFormId": "no_repeat_sumit_tradeOrderHeaderAddOrUpdate",
-            "no_repeat_sumit_tradeOrderHeaderAddOrUpdate": no_repeat_sumit_tradeOrderHeaderAddOrUpdate,
+            "no_repeat_sumit_tradeOrderHeaderAddOrUpdate": self.get_index()["no_repeat_sumit_tradeOrderHeaderAddOrUpdate"],
             "shopId": "268448506540",
             "vipId": "283046558865",
             "vipAgent": 0,
@@ -183,5 +179,5 @@ if __name__ == '__main__':
             "webType": "main", "authCode": ""}
 
     trade_order1 = trade_order(data)
-    trade_order1.add_tradeorder()
-    trade_order1.trade_order_search()
+    # print(trade_order1.get_index()["token"])
+    # trade_order1.add_tradeorder()
