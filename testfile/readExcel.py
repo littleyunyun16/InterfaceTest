@@ -10,7 +10,7 @@ path=getpathinfo.get_path()
 class ReadExcel():
     """读取excel文件数据"""
     def __init__(self, xls_name, sheet_name):
-        self.xls_path=os.path.join(path,'case',xls_name)
+        self.xls_path=os.path.join(path,'yamlcase',xls_name)
         self.sheet_name=sheet_name
         self.data = xlrd.open_workbook(self.xls_path)
         self.table = self.data.sheet_by_name(sheet_name)

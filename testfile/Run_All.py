@@ -71,7 +71,7 @@ class AllTest:
                 result.report(filename='test_report', description='接口自动化测试报告', log_path=report_path)
 
             else:
-                print("Have no case to test.")
+                print("Have no yamlcase to test.")
         except Exception as ex:
             print(str(ex))
             # log.info(str(ex))
