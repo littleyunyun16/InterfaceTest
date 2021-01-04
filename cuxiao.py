@@ -193,4 +193,4 @@ if __name__ == '__main__':
     # print(trade_order1.get_index()["token"])
     trade_order1.add_tradeorder()
     # trade_order1.trade_order_detail()
-    trade_order1.operation_log()
+    # trade_order1.operation_log()
