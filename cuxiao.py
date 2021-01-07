@@ -87,7 +87,7 @@ class trade_order:
                 "shopName": "",
                 "skuPid": "",
                 "type": "Item",
-                "qty": 1,
+                "qty": 2,
                 "discount": "1.0",
                 "combineDetailId": "",
                 "presale": False,
@@ -166,8 +166,10 @@ class trade_order:
                                    data=data, headers=headers)
         res = result.json()
         r = json.dumps(res, ensure_ascii=False, sort_keys=True, indent=2)
-        print(res["rows"][0]["giftSource"])
-        print(res["rows"][0]["giftSourceView"])
+        print("data:"+data)
+        print(r)
+        # print(res["rows"][0]["giftSource"])
+        # print(res["rows"][0]["giftSourceView"])
 
     def operation_log(self):
         url=f"http://v2.guanyierp.com/tc/trade/trade_order_header/data/log?_dc=1609168697974&tid={self.trade_order_list()}"
@@ -192,5 +194,5 @@ if __name__ == '__main__':
     trade_order1 = trade_order(data)
     # print(trade_order1.get_index()["token"])
     trade_order1.add_tradeorder()
-    # trade_order1.trade_order_detail()
-    # trade_order1.operation_log()
+    trade_order1.trade_order_detail()
+    trade_order1.operation_log()

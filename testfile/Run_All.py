@@ -5,7 +5,6 @@ __date__ = '2020/11/10 16:38'
 
 # 开始执行接口自动化，项目工程部署完毕后直接运行该文件即可
 import os
-import common.HTMLTestRunner as HTMLTestRunner
 import getpathinfo
 import unittest
 import testfile.readconfig as readConfig
